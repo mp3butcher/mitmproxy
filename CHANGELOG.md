@@ -8,6 +8,9 @@
 ## Unreleased: mitmproxy next
 
 
+## 01 October 2024: mitmproxy 10.4.2
+
+
 ## 01 October 2024: mitmproxy 3.10.13
 
 
