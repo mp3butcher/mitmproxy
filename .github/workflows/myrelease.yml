@@ -1,0 +1,117 @@
+name: Build artifacts to link to release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number'
+        required: true
+  push:
+    tags:
+      - '*'
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:  
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: zipped
+          release_name: Zipped Binaries
+          body: |
+            This release is only a zipped build for download convenience
+          draft: false
+          prerelease: false    
+  build-linux:
+    runs-on: ubuntu-latest    
+    needs: main
+    steps:      
+      - uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+      - name: pack mitmproxy
+        run: |
+          python -m venv venv
+          venv/bin/pip install pyinstaller mitmproxy
+          venv/bin/pyinstaller release/specs/standalone.spec
+      - name : Zip
+        run: |
+             cd dist
+             zip ../mitmproxy.zip *
+             cd ..
+      - name: upload linux artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{needs.main.outputs.upload_url }} 
+          asset_path: mitmproxy.zip
+          asset_name: mitmproxy.linux-amd64.zip
+          asset_content_type: application/zip
+  build-mac:
+    runs-on: macos-latest    
+    needs: main
+    steps:      
+      - uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+      - name: pack mitmproxy
+        run: |
+          python -m venv venv
+          venv/bin/pip install pyinstaller mitmproxy
+          venv/bin/pyinstaller release/specs/standalone.spec
+      - name : Zip
+        run: |
+             cd dist
+             zip ../mitmproxy.zip *
+             cd ..
+      - name: upload linux artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{needs.main.outputs.upload_url }} 
+          asset_path: mitmproxy.zip
+          asset_name: mitmproxy.macos-arm.zip
+          asset_content_type: application/zip
+  build-windows:
+    runs-on: windows-latest
+    needs: main
+    steps:      
+      - uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+      - name: pack mitmproxy 
+        run: |
+          python -m venv venv
+          venv/Scripts/pip.exe install pyinstaller mitmproxy
+          venv/Scripts/pyinstaller.exe release/specs/standalone.spec
+      - name: Archive mitmproxy as artifact
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: mitmproxy
+          path: dist
+      - name : Zip
+        run: Compress-Archive -Path dist/* -Destination mitmproxy.zip
+      - name: upload windows artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
+        with:          
+          upload_url: ${{needs.main.outputs.upload_url }} 
+          asset_path: mitmproxy.zip
+          asset_name: mitmproxy.windows-amd64.zip
+          asset_content_type: application/zip
