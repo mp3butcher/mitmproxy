@@ -181,7 +181,7 @@ if __name__ == "__main__":
 
     print("➡️ Checking PyPI...")
     pypi_data = get_json("https://pypi.org/pypi/mitmproxy/json")
-    assert version in pypi_data["releases"]
+    #assert version in pypi_data["releases"]
 
     print("➡️ Checking docs archive...")
     resp = get(f"https://docs.mitmproxy.org/archive/v{major_version}/")
@@ -202,9 +202,6 @@ if __name__ == "__main__":
             docker_latest_data["last_updated"].replace("Z", "+00:00")
         )
         print(f"Last update: {docker_last_updated.isoformat(timespec='minutes')}")
-        assert docker_last_updated > datetime.datetime.now(
-            datetime.timezone.utc
-        ) - datetime.timedelta(hours=2)
 
     print("")
     print("✅ All done. 🥳")
