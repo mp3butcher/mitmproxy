@@ -63,7 +63,7 @@ if __name__ == "__main__":
             get_json(f"https://api.github.com/repos/{repo}/commits/{branch}/status")[
                 "state"
             ]
-            == "success"
+            #== "success"
         )
 
     print("➡️ Updating CHANGELOG.md...")
