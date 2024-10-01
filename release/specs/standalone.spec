@@ -15,6 +15,7 @@ for tool in ["mitmproxy", "mitmdump", "mitmweb"]:
     a = Analysis(
         [tool],
         excludes=excludes,
+        hiddenimports=collect_submodules('pika')+collect_submodules('rstream')
     )
     pyz = PYZ(a.pure, a.zipped_data)
 
