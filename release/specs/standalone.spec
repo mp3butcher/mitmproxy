@@ -1,4 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_submodules
 
 for tool in ["mitmproxy", "mitmdump", "mitmweb"]:
     excludes = []
