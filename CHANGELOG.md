@@ -8,6 +8,9 @@
 ## Unreleased: mitmproxy next
 
 
+## 01 October 2024: mitmproxy 3.10.13
+
+
 ## 01 October 2024: mitmproxy 10.6.6
 
 - Add `show_ignored_hosts` option to display ignored flows in the UI.
