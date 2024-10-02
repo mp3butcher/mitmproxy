@@ -48,8 +48,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: amqp
+          release_name: Release amqp
           body: |
             This release only embed AMQP communication library
           draft: false
@@ -59,7 +59,6 @@ jobs:
         env:
           GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/mitmweb.exe
           asset_name: mitmproxyAMQP.windows-amd64.zip
           asset_content_type: application/x-msdownload
