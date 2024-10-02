@@ -45,7 +45,7 @@ jobs:
       - name : Zip
         run: |
              cd dist
-             zip mitmproxy.zip *
+             zip ../mitmproxy.zip *
              cd ..
       - name: upload linux artifact
         uses: actions/upload-release-asset@v1
@@ -73,7 +73,7 @@ jobs:
       - name : Zip
         run: |
              cd dist
-             zip mitmproxy.zip *
+             zip ../mitmproxy.zip *
              cd ..
       - name: upload linux artifact
         uses: actions/upload-release-asset@v1
