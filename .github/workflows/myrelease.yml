@@ -44,7 +44,7 @@ jobs:
           path: dist
       - name: Zip project 
         run: |
-          zip --junk-paths mitmproxyAMQP.windows-amd64.zip dist/*.*
+          git archive --output=./mitmproxyAMQP.windows-amd64.zip --format=tar HEAD ./dist
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
