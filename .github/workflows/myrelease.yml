@@ -40,7 +40,7 @@ jobs:
       - name: pack mitmproxy with amqp
         run: |
           python -m venv venv
-          venv/bin/pip install pyinstaller
+          venv/bin/pip install pyinstaller mitmproxy pika rstream
           venv/bin/pyinstaller release/specs/standalone.spec
       - name : Zip
         run: |
@@ -68,7 +68,7 @@ jobs:
       - name: pack mitmproxy with amqp
         run: |
           python -m venv venv
-          venv/bin/pip install pyinstaller
+          venv/bin/pip install pyinstaller mitmproxy pika rstream
           venv/bin/pyinstaller release/specs/standalone.spec
       - name : Zip
         run: |
