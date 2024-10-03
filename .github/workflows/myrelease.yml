@@ -96,7 +96,7 @@ jobs:
       - name: pack mitmproxy with amqp
         run: |
           python -m venv venv
-          venv/Scripts/pip.exe install pyinstaller
+          venv/Scripts/pip.exe install pyinstaller mitmproxy pika rstream
           venv/Scripts/pyinstaller.exe release/specs/standalone.spec
       - name: Archive mitmproxy as artiefact
         id: upload
