@@ -1,5 +1,4 @@
 # -*- mode: python ; coding: utf-8 -*-
-from PyInstaller.utils.hooks import collect_submodules
 
 for tool in ["mitmproxy", "mitmdump", "mitmweb"]:
     excludes = []
@@ -15,8 +14,7 @@ for tool in ["mitmproxy", "mitmdump", "mitmweb"]:
 
     a = Analysis(
         [tool],
-        excludes=excludes,
-        hiddenimports=collect_submodules('pika')+collect_submodules('rstream')+collect_submodules('mitmproxy')
+        excludes=excludes
     )
     pyz = PYZ(a.pure, a.zipped_data)
 
